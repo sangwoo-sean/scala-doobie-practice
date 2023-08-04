@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - "./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql"
+    environment:
+      - "POSTGRES_USER=user"
+      - "POSTGRES_PASSWORD=1111"
+    ports:
+      - "5432:5432"
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
