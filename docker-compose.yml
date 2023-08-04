@@ -9,6 +9,7 @@ services:
     environment:
       - "POSTGRES_USER=user"
       - "POSTGRES_PASSWORD=1111"
+      - "POSTGRES_DB=hellodoobie"
     ports:
       - "5432:5432"
   adminer:

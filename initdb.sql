@@ -1,6 +1,3 @@
--- Database
-CREATE DATABASE hellodoobie;
-
 -- Directors
 CREATE TABLE directors
 (
