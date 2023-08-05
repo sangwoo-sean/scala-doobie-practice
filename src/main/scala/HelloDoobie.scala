@@ -16,6 +16,11 @@ object HelloDoobie extends IOApp {
     query.to[List].transact(xa)
   }
 
+  def findActorById(id: Int) = {
+    val query = sql"select name from actors where id=$id".query[String]
+    query.option.transact(xa)
+  }
+
   override def run(args: List[String]): IO[ExitCode] =
-    findAllActorsNames.map(println).as(ExitCode.Success)
+    findActorById(1).map(println).as(ExitCode.Success)
 }
