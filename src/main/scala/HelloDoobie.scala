@@ -40,6 +40,15 @@ object HelloDoobie extends IOApp {
     ).compile.toList.map(_.headOption).transact(xa)
   }
 
+  def findActorsByInitial(letter: String) = {
+    val selectPart = fr"select id, name"
+    val fromPart = fr"from actors"
+    val wherePart = fr"where Left(name, 1) = $letter"
+
+    val statement = selectPart ++ fromPart ++ wherePart
+    statement.query[Actor].stream.compile.toList.transact(xa)
+  }
+
   override def run(args: List[String]): IO[ExitCode] =
-    findActorByName("Henry Cavill").map(println).as(ExitCode.Success)
+    findActorsByInitial("H").map(println).as(ExitCode.Success)
 }
