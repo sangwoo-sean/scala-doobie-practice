@@ -49,6 +49,11 @@ object HelloDoobie extends IOApp {
     statement.query[Actor].stream.compile.toList.transact(xa)
   }
 
+  def saveActor(id: Int, name: String) = {
+    val query = sql"insert into actors (id, name) VALUES ($id, $name)"
+    query.update.run.transact(xa)
+  }
+
   override def run(args: List[String]): IO[ExitCode] =
-    findActorsByInitial("H").map(println).as(ExitCode.Success)
+    saveActor(99, "Foo").map(println).as(ExitCode.Success)
 }
