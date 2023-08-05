@@ -65,6 +65,12 @@ object HelloDoobie extends IOApp {
     Update[Actor](queryString).run(Actor(id, name)).transact(xa)
   }
 
+  def saveActorsBulk(names: List[String]) = {
+    val queryString = "insert into actors (name) values (?)"
+    Update[String](queryString)
+      .updateManyWithGeneratedKeys[Actor]("id", "name")(names).compile.toList.transact(xa)
+  }
+
   override def run(args: List[String]): IO[ExitCode] =
-    saveActors_v2(98, "Baz").map(println).as(ExitCode.Success)
+    saveActorsBulk(List("lorem", "ipsum", "dolor")).map(println).as(ExitCode.Success)
 }
