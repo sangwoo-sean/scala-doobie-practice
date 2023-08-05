@@ -21,6 +21,11 @@ object HelloDoobie extends IOApp {
     query.option.transact(xa)
   }
 
+  def findActorsStream = {
+    sql"select name from actors".query[String]
+      .stream.compile.toList.transact(xa)
+  }
+
   override def run(args: List[String]): IO[ExitCode] =
-    findActorById(1).map(println).as(ExitCode.Success)
+    findActorsStream.map(println).as(ExitCode.Success)
 }
